@@ -351,6 +351,7 @@ static void glfw_error_callback(int error, const char *description) {
 #include "Fonts/Roboto-Bold.h"
 #include "Fonts/Roboto-Italic.h"
 #include "Images/windowIcons.h"
+#include "Images/logo.h"
 
 namespace Marika {
 	Application::Application(const ApplicationSpecification &applicationSpecification) : m_Specification(applicationSpecification) {
@@ -514,6 +515,10 @@ namespace Marika {
 			void *data = Image::Decode(g_WindowMinimizeIcon, sizeof(g_WindowMinimizeIcon), w, h);
 			m_IconMinimize = std::make_shared<Marika::Image>(w, h, ImageFormat::RGBA, data);
 			free(data);
+		} {
+			uint32_t w, h;
+			void *data = Image::Decode(g_AppIcon, sizeof(g_AppIcon), w, h);
+			m_AppHeaderIcon = std::make_shared<Marika::Image>(w, h, ImageFormat::RGBA, data);
 		}
 	}
 
@@ -577,7 +582,7 @@ namespace Marika {
 				ImGui::GetItemRectMin().x + logoOffset.x, ImGui::GetItemRectMin().y + logoOffset.y
 			};
 			const ImVec2 logoRectMax = {logoRectStart.x + logoWidth, logoRectStart.y + logoHeight};
-			//fgDrawList->AddImage(m_AppHeaderIcon->GetDescriptorSet(), logoRectStart, logoRectMax);
+			fgDrawList->AddImage(m_AppHeaderIcon->GetDescriptorSet(), logoRectStart, logoRectMax);
 		}
 
 		ImGui::BeginHorizontal("Titlebar", {
