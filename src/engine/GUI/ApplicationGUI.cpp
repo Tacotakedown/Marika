@@ -399,7 +399,7 @@ namespace Marika {
 			                 monitorY + (videoMode->height - m_Specification.Height) / 2);
 		}
 
-		//SetWindowIcon(m_WindowHandle,)
+		SetWindowIcon(m_WindowHandle, g_AppIcon, sizeof(g_AppIcon));
 
 		glfwShowWindow(m_WindowHandle);
 

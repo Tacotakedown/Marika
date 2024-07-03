@@ -66,6 +66,8 @@ add_executable(Marika ${SRC_FILES}
         src/engine/GUI/ImGuiTheme/ImGuiTheme.h
         src/engine/GUI/ImGuiTheme/ImGuiTheme.cpp
         src/engine/GUI/Images/logo.h
+        src/BaseUI/BaseUI.cpp
+        src/BaseUI/BaseUI.h
 
 )
 

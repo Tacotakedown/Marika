@@ -1,5 +1,6 @@
 
 #include "engine/GUI/ApplicationGUI.h"
+#include "BaseUI/BaseUI.h"
 
 extern Marika::Application *Marika::CreateApplication(int argc, char **argv);
 
@@ -10,7 +11,9 @@ class MainLayer : public Marika::Layer {
 public:
     virtual void OnUIRender(ImVec2 windowPos, ImVec2 windowSize) override {
         ImDrawList *drawList = ImGui::GetWindowDrawList();
-        ImGui::Text("The monkeys will always win");
+        BaseUI basedUi(windowSize, windowPos, drawList);
+
+        basedUi.RenderBackground();
     }
 };
 
