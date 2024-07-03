@@ -1,8 +1,10 @@
-# Elden ring mod launcher GUI
+# Marika
+
+An Elden Ring mod launcher
 
 ## Purpose
 
-Allows Steam users to play seamless coop with crack users without continuously needing to swap files around
+Allows Steam users to play seamless coop with Goldberg users without continuously needing to swap files around
 
 ## How it works
 
@@ -18,11 +20,11 @@ time the user would like to play seamless, they have to launch from this launche
 ## Building
 
 ```bash
-    git clone --recursive https://github.com/Tacotakedown/EldedRingModLauncher.git
-    cd EldedRingModLauncher
+    git clone --recursive https://github.com/Tacotakedown/Marika.git
+    cd Marika
     mkdir build
     cd build
     cmake ..
     cmake --build --config Release .
-    # release is built to build/bin/release/EldenRingModLauncher.exe
+    # release is built to build/bin/release/Marika.exe
 ```

@@ -8,7 +8,7 @@
 #include <memory>
 #include <string>
 
-namespace ModLauncher {
+namespace Marika {
     struct Buffer {
         void *Data;
         uint64_t Size;

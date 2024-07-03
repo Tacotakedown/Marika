@@ -11,7 +11,7 @@
 #include <filesystem>
 #include <fstream>
 
-namespace ModLauncher {
+namespace Marika {
     class FileStreamWriter : public StreamWriter {
     public:
         FileStreamWriter(const std::filesystem::path &path);
@@ -31,6 +31,8 @@ namespace ModLauncher {
         std::ofstream m_Stream;
     };
 
+    //==============================================================================
+    /// FileStreamReader
     class FileStreamReader : public StreamReader {
     public:
         FileStreamReader(const std::filesystem::path &path);
@@ -40,8 +42,8 @@ namespace ModLauncher {
         ~FileStreamReader();
 
         bool IsStreamGood() const final { return m_Stream.good(); }
-        uint64_t GetStreamPosition() final { return m_Stream.tellp(); }
-        void SetStreamPosition(uint64_t position) final { m_Stream.seekp(position); }
+        uint64_t GetStreamPosition() override { return m_Stream.tellg(); }
+        void SetStreamPosition(uint64_t position) override { m_Stream.seekg(position); }
 
         bool ReadData(char *destination, size_t size) override;
 

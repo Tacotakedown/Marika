@@ -4,7 +4,7 @@
 
 #include "FileStream.h"
 
-namespace ModLauncher {
+namespace Marika {
     FileStreamWriter::FileStreamWriter(const std::filesystem::path &path): m_Path(path) {
         m_Stream = std::ofstream(path, std::ifstream::out | std::ifstream::binary);
     }

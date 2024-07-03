@@ -11,12 +11,12 @@
 #include <map>
 #include <unordered_map>
 
-namespace ModLauncher {
+namespace Marika {
 	class StreamReader {
 	public:
 		virtual ~StreamReader() = default;
 
-		[[nodiscard]] virtual bool IsStreamGood() const = 0;
+		virtual bool IsStreamGood() const = 0;
 
 		virtual uint64_t GetStreamPosition() = 0;
 
@@ -24,16 +24,16 @@ namespace ModLauncher {
 
 		virtual bool ReadData(char *destination, size_t size) = 0;
 
-		explicit operator bool() const { return IsStreamGood(); }
+		operator bool() const { return IsStreamGood(); }
 
 		bool ReadBuffer(Buffer &buffer, uint32_t size = 0);
 
 		bool ReadString(std::string &string);
 
-
 		template<typename T>
 		bool ReadRaw(T &type) {
-			const bool success = ReadData(static_cast<char *>(&type), sizeof(T));
+			bool success = ReadData((char *) &type, sizeof(T));
+			//WL_CORE_ASSERT(success);
 			return success;
 		}
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(EldenRingModLoader)
+project(Marika)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -39,7 +39,7 @@ include_directories(
         ${IncludeDir.glm}
 )
 
-add_executable(EldenRingModLauncher ${SRC_FILES}
+add_executable(Marika ${SRC_FILES}
         src/engine/Buffer/Buffer.h
         src/Utils/DllWriter.h
         src/engine/Serialization/BufferStream.cpp
@@ -57,10 +57,18 @@ add_executable(EldenRingModLauncher ${SRC_FILES}
         src/engine/GUI/ApplicationGUI.cpp
         src/engine/GUI/ApplicationGUI.h
         src/engine/Layer.h
+        src/engine/GUI/Fonts/Roboto-Bold.h
+        src/engine/GUI/Fonts/Roboto-Italic.h
+        src/engine/GUI/Fonts/Roboto-Regular.h
+        src/engine/GUI/Images/windowIcons.h
+        src/engine/GUI/UI/UI.cpp
+        src/engine/GUI/UI/UI.h
+        src/engine/GUI/ImGuiTheme/ImGuiTheme.h
+        src/engine/GUI/ImGuiTheme/ImGuiTheme.cpp
 
 )
 
-target_sources(EldenRingModLauncher PRIVATE ${IMGUI_SOURCES})
+target_sources(Marika PRIVATE ${IMGUI_SOURCES})
 
 add_subdirectory(dependencies/glfw)
 add_subdirectory(dependencies/yaml-cpp)
@@ -71,17 +79,17 @@ target_link_libraries(GLFW INTERFACE glfw)
 
 
 target_link_libraries(
-        EldenRingModLauncher PRIVATE
+        Marika PRIVATE
         yaml-cpp
         glfw
         ${Vulkan_LIBRARIES}
 )
 
-target_compile_definitions(EldenRingModLauncher PRIVATE
+target_compile_definitions(Marika PRIVATE
         $<$<CONFIG:Release>:RELEASE_DIST>
 )
 
-target_link_options(EldenRingModLauncher PRIVATE
+target_link_options(Marika PRIVATE
         $<$<CONFIG:Release>:/SUBSYSTEM:WINDOWS>
         $<$<NOT:$<CONFIG:Release>>:/SUBSYSTEM:CONSOLE>
 )

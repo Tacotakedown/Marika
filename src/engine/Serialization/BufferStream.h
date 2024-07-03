@@ -11,7 +11,7 @@
 #include <filesystem>
 #include <fstream>
 
-namespace ModLauncher {
+namespace Marika {
     class BufferStreamWriter : public StreamWriter {
     public:
         BufferStreamWriter(Buffer targetBuffer, uint64_t position = 0);

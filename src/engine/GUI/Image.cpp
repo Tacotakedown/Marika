@@ -1,7 +1,3 @@
-//
-// Created by Taco on 7/2/2024.
-//
-
 #include "Image.h"
 
 #include "imgui.h"
@@ -9,9 +5,10 @@
 
 #include "ApplicationGUI.h"
 
-#include "stb_image/stb_image.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
-namespace ModLauncher {
+namespace Marika {
 	namespace Utils {
 		static uint32_t GetVulkanMemoryType(VkMemoryPropertyFlags properties, uint32_t type_bits) {
 			VkPhysicalDeviceMemoryProperties prop;

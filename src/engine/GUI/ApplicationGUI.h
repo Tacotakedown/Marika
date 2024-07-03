@@ -7,6 +7,8 @@
 
 #include "engine/Layer.h"
 #include "engine/GUI/Image.h"
+#include "engine/GUI/UI/UI.h"
+#include "ImGuiTheme/ImGuiTheme.h"
 
 #include <string>
 #include <vector>
@@ -23,7 +25,7 @@ void check_vk_result(VkResult err);
 
 struct GLFWwindow;
 
-namespace ModLauncher {
+namespace Marika {
     struct ApplicationSpecification {
         std::string Name = "Elden Ring Mod Launcher";
         uint32_t Width = 800;
@@ -118,11 +120,11 @@ namespace ModLauncher {
         std::queue<std::function<void()> > m_EventQueue;
 
 
-        std::shared_ptr<ModLauncher::Image> m_AppHeaderIcon;
-        std::shared_ptr<ModLauncher::Image> m_IconClose;
-        std::shared_ptr<ModLauncher::Image> m_IconMinimize;
-        std::shared_ptr<ModLauncher::Image> m_IconMaximize;
-        std::shared_ptr<ModLauncher::Image> m_IconRestore;
+        std::shared_ptr<Marika::Image> m_AppHeaderIcon;
+        std::shared_ptr<Marika::Image> m_IconClose;
+        std::shared_ptr<Marika::Image> m_IconMinimize;
+        std::shared_ptr<Marika::Image> m_IconMaximize;
+        std::shared_ptr<Marika::Image> m_IconRestore;
     };
 
     Application *CreateApplication(int argc, char **argv);

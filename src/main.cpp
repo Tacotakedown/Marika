@@ -1,14 +1,38 @@
 
 #include "engine/GUI/ApplicationGUI.h"
 
-extern ModLauncher::Application *ModLauncher::CreateApplication(int argc, char **argv);
+extern Marika::Application *Marika::CreateApplication(int argc, char **argv);
 
 bool g_ApplicationRunning = true;
 
-namespace ModLauncher {
+
+class MainLayer : public Marika::Layer {
+public:
+    virtual void OnUIRender(ImVec2 windowPos, ImVec2 windowSize) override {
+        ImDrawList *drawList = ImGui::GetWindowDrawList();
+        ImGui::Text("The monkeys will always win");
+    }
+};
+
+Marika::Application *Marika::CreateApplication(int argc, char **argv) {
+    Marika::ApplicationSpecification spec;
+    spec.Name = "Marika";
+    spec.CustomTitlebar = true;
+    spec.CenterWindow = true;
+
+    Marika::Application *app = new Marika::Application(spec);
+    app->PushLayer<MainLayer>();
+
+    return app;
+}
+
+
+namespace Marika {
     int Main(int argc, char **argv) {
         while (g_ApplicationRunning) {
-            // run app
+            Marika::Application *app = Marika::CreateApplication(argc, argv);
+            app->Run();
+            delete app;
         }
         return 0;
     }
@@ -25,7 +49,7 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
 
 #else
 int main(int argc, char **argv) {
-    return ModLauncher::Main(argc, argv);
+    return Marika::Main(argc, argv);
 }
 
 #endif

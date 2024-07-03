@@ -4,7 +4,7 @@
 
 #include "BufferStream.h"
 
-namespace ModLauncher {
+namespace Marika {
     BufferStreamWriter::BufferStreamWriter(Buffer targetBuffer, uint64_t position)
         : m_TargetBuffer(targetBuffer), m_BufferPosition(position) {
     }

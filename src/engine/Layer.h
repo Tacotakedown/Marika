@@ -5,7 +5,9 @@
 #ifndef LAYER_H
 #define LAYER_H
 
-namespace ModLauncher {
+#include <imgui.h>
+
+namespace Marika {
     class Layer {
     public:
         virtual ~Layer() = default;
