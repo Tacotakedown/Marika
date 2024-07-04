@@ -370,6 +370,35 @@ namespace Marika {
 		return *s_Instance;
 	}
 
+	WNDPROC originalWndProc = nullptr;
+
+	LRESULT CALLBACK CustomWindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+		switch (message) {
+			case WM_GETMINMAXINFO: {
+				MINMAXINFO *minMaxInfo = (MINMAXINFO *) lParam;
+				minMaxInfo->ptMaxTrackSize.x = 620;
+				minMaxInfo->ptMaxTrackSize.y = 420;
+				minMaxInfo->ptMinTrackSize.x = 620;
+				minMaxInfo->ptMinTrackSize.y = 420;
+
+				return 0;
+			}
+			case WM_SIZE: {
+				LONG style = GetWindowLong(hWnd, GWL_STYLE);
+				style &= ~WS_CAPTION;
+				SetWindowLong(hWnd, GWL_STYLE, style);
+				return DefWindowProc(hWnd, message, wParam, lParam);
+			}
+			default:
+				return CallWindowProc(originalWndProc, hWnd, message, wParam, lParam);
+		}
+	}
+
+	void SubClassGLFWWindow(GLFWwindow *window) {
+		HWND hwnd = glfwGetWin32Window(window);
+		originalWndProc = (WNDPROC) SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR) CustomWindowProc);
+	}
+
 	void Application::Init() {
 		glfwSetErrorCallback(glfw_error_callback);
 		if (!glfwInit()) {
@@ -391,6 +420,8 @@ namespace Marika {
 
 		m_WindowHandle = glfwCreateWindow(m_Specification.Width, m_Specification.Height, m_Specification.Name.c_str(), NULL, NULL);
 
+
+		SubClassGLFWWindow(m_WindowHandle);
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
 		if (m_Specification.CenterWindow) {
@@ -436,6 +467,8 @@ namespace Marika {
 		(void) io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+		UI::SetEldenRingTheme();
 
 
 		ImGuiStyle &style = ImGui::GetStyle();

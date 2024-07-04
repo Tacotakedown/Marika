@@ -68,6 +68,8 @@ add_executable(Marika ${SRC_FILES}
         src/engine/GUI/Images/logo.h
         src/BaseUI/BaseUI.cpp
         src/BaseUI/BaseUI.h
+        src/Utils/SteamUtils.h
+        src/Utils/Launcher.h
 
 )
 

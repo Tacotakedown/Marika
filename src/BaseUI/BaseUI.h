@@ -10,6 +10,10 @@
 
 static std::vector<ImVec2> s_CirclePos;
 
+bool RenderLaunchButton(ImVec2 pos, ImVec2 size, const char *label);
+
+void RenderConfirmPopup(ImVec2 windowSize);
+
 
 class BaseUI {
 public:
