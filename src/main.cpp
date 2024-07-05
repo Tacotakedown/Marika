@@ -194,7 +194,7 @@ namespace Marika {
 #include <windows.h>
 
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
-    return ModLauncher::Main(__argc,__argv);
+    return Marika::Main(__argc,__argv);
 }
 
 #else
