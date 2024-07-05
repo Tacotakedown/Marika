@@ -70,6 +70,8 @@ add_executable(Marika ${SRC_FILES}
         src/BaseUI/BaseUI.h
         src/Utils/SteamUtils.h
         src/Utils/Launcher.h
+        src/Utils/Console.cpp
+        src/Utils/Console.h
 
 )
 

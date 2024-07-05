@@ -7,12 +7,13 @@
 #include "imgui/imgui.h"
 #include <vector>
 #include <string>
+#include <functional>
 
 static std::vector<ImVec2> s_CirclePos;
 
 bool RenderLaunchButton(ImVec2 pos, ImVec2 size, const char *label);
 
-void RenderConfirmPopup(ImVec2 windowSize);
+void RenderConfirmPopup(ImVec2 windowSize, const std::function<void()> &continueCallback);
 
 
 class BaseUI {
@@ -28,6 +29,8 @@ public:
     void RenderBackgroundBaseLayer();
 
     void RenderGradientCircle(ImVec2 center, float radius, float maxOpacity, ImU32 color);
+
+    void RenderLoadingCircle(ImVec2 pos, float speed, float radius);
 
 private:
     ImDrawList *m_drawList;

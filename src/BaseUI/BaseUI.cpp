@@ -177,7 +177,7 @@ bool RenderLaunchButton(ImVec2 pos, ImVec2 size, const char *label) {
 	return pressed;
 }
 
-void RenderConfirmPopup(ImVec2 windowSize) {
+void RenderConfirmPopup(ImVec2 windowSize, const std::function<void()> &continueCallback) {
 	ImVec2 zeroPoint = ImVec2(windowSize.x / 2.0f - (windowSize.x - 100.0f) / 2.0f, windowSize.y / 2.0f - 100.0f);
 	ImGui::SetNextWindowPos(zeroPoint);
 	ImVec2 popupSize = ImVec2(windowSize.x - 100.0f, windowSize.y - 200.0f);
@@ -190,7 +190,7 @@ void RenderConfirmPopup(ImVec2 windowSize) {
 	ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
 	if (ImGui::BeginPopup("No persistence enabled", ImGuiWindowFlags_NoMove)) {
 		ImGui::TextWrapped(
-			"Lunching the game with persistence disabled will cause the launcher to not revert back to the official steam configuration automatically upon closing the game. In order to play on Steam you will have to use the 'Remove Configuation' button");
+			"Launching the game with persistence disabled will cause the launcher to not revert back to the official steam configuration automatically upon closing the game. In order to play on Steam, you will have to use the 'Remove Configuration' button");
 
 		ImGui::SetCursorPos(ImVec2(zeroPoint.x, zeroPoint.y + 50.0f));
 		if (ImGui::Button("Cancel")) {
@@ -199,7 +199,9 @@ void RenderConfirmPopup(ImVec2 windowSize) {
 		ImGui::SetCursorPos(ImVec2(zeroPoint.x + 320.0f, zeroPoint.y + 50.0f));
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.1f, 0.1f, 0.8f));
 		if (ImGui::Button("Continue")) {
-			// TODO: launch without tracking the game
+			if (continueCallback) {
+				continueCallback();
+			}
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::PopStyleColor();
@@ -209,4 +211,17 @@ void RenderConfirmPopup(ImVec2 windowSize) {
 	ImGui::PopStyleColor(2);
 	ImGui::PopTextWrapPos();
 	ImGui::PopStyleVar(2);
+}
+
+
+void BaseUI::RenderLoadingCircle(ImVec2 pos, float speed, float radius) {
+	float time = ImGui::GetTime();
+	float angle = speed * time;
+
+	ImVec2 dotPos = ImVec2(pos.x + radius * std::cos(angle), pos.y + radius * std::sin(angle));
+
+	float dotRadius = 5.0f;
+	ImU32 dotColor = IM_COL32(255, 255, 255, 255); // White color, full opacity
+	ImGui::GetWindowDrawList()->AddCircle(pos, radius, ImColor(0.0f, 0.0f, 0.0f, 0.4f), 0, dotRadius * 2.0f);
+	ImGui::GetWindowDrawList()->AddCircleFilled(dotPos, dotRadius, dotColor);
 }

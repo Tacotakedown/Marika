@@ -13,49 +13,51 @@
 #include <filesystem>
 #include <windows.h>
 
-std::string GetSteamPath() {
+std::wstring GetSteamPathW() {
     HKEY hKey;
-    if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\WOW6432Node\\Valve\\Steam", 0, KEY_READ, &hKey) != ERROR_SUCCESS) {
-        std::cerr << "Unable to open registry key" << std::endl;
-        return "";
+    if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\WOW6432Node\\Valve\\Steam", 0, KEY_READ, &hKey) != ERROR_SUCCESS) {
+        std::wcerr << L"Unable to open registry key" << std::endl;
+        return L"";
     }
-    char steamPath[MAX_PATH];
+
+    wchar_t steamPath[MAX_PATH];
     DWORD bufferSize = sizeof(steamPath);
-    if (RegQueryValueEx(hKey, "InstallPath", NULL,NULL, (LPBYTE) steamPath, &bufferSize) != ERROR_SUCCESS) {
-        std::cerr << "unable to read reg value" << std::endl;
+    if (RegQueryValueExW(hKey, L"InstallPath", NULL, NULL, reinterpret_cast<LPBYTE>(steamPath), &bufferSize) != ERROR_SUCCESS) {
+        std::wcerr << L"Unable to read reg value" << std::endl;
         RegCloseKey(hKey);
-        return "";
+        return L"";
     }
 
     RegCloseKey(hKey);
-    return std::string(steamPath);
+    return std::wstring(steamPath);
 }
 
-std::string FindEldenRingPath(const std::string &steamPath) {
-    std::string configFilePath = steamPath + "\\steamapps\\libraryfolders.vdf";
-    std::ifstream configFile(configFilePath);
+std::wstring FindEldenRingPath() {
+    const std::wstring steamPath = GetSteamPathW(); // Assuming GetSteamPathW() returns std::wstring
+    std::wstring configFilePath = steamPath + L"\\steamapps\\libraryfolders.vdf";
+    std::wifstream configFile(configFilePath);
 
     if (!configFile.is_open()) {
-        std::cerr << "unable to open libraryfolder.vdf" << std::endl;
-        return "";
+        std::wcerr << L"Unable to open libraryfolder.vdf" << std::endl;
+        return L"";
     }
 
-    std::string line;
-    std::regex pathRegex("\"path\"\\s+\"(.+?)\"");
-    std::regex appRegex("\"12345620\"");
-    std::smatch match;
-    std::string currentPath;
+    std::wstring line;
+    std::wregex pathRegex(L"\"path\"\\s+\"(.+?)\"");
+    std::wregex appRegex(L"\"12345620\"");
+    std::wsmatch match;
+    std::wstring currentPath;
 
     while (std::getline(configFile, line)) {
         if (std::regex_search(line, match, pathRegex)) {
             currentPath = match[1].str();
         } else if (std::regex_search(line, appRegex) && !currentPath.empty()) {
             configFile.close();
-            return currentPath + "\\steamapps\\common\\ELDEN RING\\Game";
+            return currentPath + L"\\steamapps\\common\\ELDEN RING\\Game";
         }
     }
     configFile.close();
-    return "";
+    return L"";
 }
 
 #endif //STEAMUTILS_H
