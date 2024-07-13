@@ -33,20 +33,29 @@ std::wstring GetSteamPathW() {
 }
 
 std::wstring FindEldenRingPath() {
-    const std::wstring steamPath = GetSteamPathW(); // Assuming GetSteamPathW() returns std::wstring
+    const std::wstring steamPath = GetSteamPathW();
     std::wstring configFilePath = steamPath + L"\\steamapps\\libraryfolders.vdf";
     std::wifstream configFile(configFilePath);
 
     if (!configFile.is_open()) {
-        std::wcerr << L"Unable to open libraryfolder.vdf" << std::endl;
+        std::wcerr << L"Unable to open libraryfolders.vdf" << std::endl;
         return L"";
     }
 
+    std::locale::global(std::locale(""));
+
     std::wstring line;
     std::wregex pathRegex(L"\"path\"\\s+\"(.+?)\"");
-    std::wregex appRegex(L"\"12345620\"");
+    std::wregex appRegex(L"\"1245620\"");
     std::wsmatch match;
     std::wstring currentPath;
+
+    while (std::getline(configFile, line)) {
+        //std::wcout << line << std::endl;
+    }
+
+    configFile.clear();
+    configFile.seekg(0, std::ios::beg);
 
     while (std::getline(configFile, line)) {
         if (std::regex_search(line, match, pathRegex)) {
@@ -56,8 +65,10 @@ std::wstring FindEldenRingPath() {
             return currentPath + L"\\steamapps\\common\\ELDEN RING\\Game";
         }
     }
+
     configFile.close();
     return L"";
 }
+
 
 #endif //STEAMUTILS_H

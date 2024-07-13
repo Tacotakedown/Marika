@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 project(Marika)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -35,6 +35,8 @@ include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui
         ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/GLFW/include
         ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb_image
+        ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/minizip
+        ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/zlib
         "C:/VulkanSDK/1.3.283.0/Include"
         ${IncludeDir.glm}
 )
@@ -72,6 +74,11 @@ add_executable(Marika ${SRC_FILES}
         src/Utils/Launcher.h
         src/Utils/Console.cpp
         src/Utils/Console.h
+        dependencies/ini/ini.h
+        src/Utils/DeltaTime.cpp
+        src/Utils/DeltaTime.h
+        dependencies/toml/toml.hpp
+        #src/Utils/ModEngineTools.h
 
 )
 
@@ -79,16 +86,24 @@ target_sources(Marika PRIVATE ${IMGUI_SOURCES})
 
 add_subdirectory(dependencies/glfw)
 add_subdirectory(dependencies/yaml-cpp)
+#add_subdirectory(dependencies/zlib)
+#add_subdirectory(dependencies/minizip)
+
 
 add_library(GLFW INTERFACE)
 target_include_directories(GLFW INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/GLFW/include)
 target_link_libraries(GLFW INTERFACE glfw)
 
+link_directories("C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22621.0/um/x64")
 
 target_link_libraries(
         Marika PRIVATE
         yaml-cpp
         glfw
+        "C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22621.0/um/x64/fwpuclnt.lib"
+        #        zlib
+        #        minizip
+
         ${Vulkan_LIBRARIES}
 )
 

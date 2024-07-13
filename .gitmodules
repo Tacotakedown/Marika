@@ -7,3 +7,9 @@
 [submodule "dependencies/glfw"]
 	path = dependencies/glfw
 	url = https://github.com/TheCherno/glfw.git
+[submodule "dependencies/minizip"]
+	path = dependencies/minizip
+	url = https://github.com/domoticz/minizip.git
+[submodule "dependencies/zlib"]
+	path = dependencies/zlib
+	url = https://github.com/madler/zlib.git
