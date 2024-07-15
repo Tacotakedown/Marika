@@ -24,8 +24,9 @@ non steam users can manually select the folder that contains the `eldenring.exe`
 
 ## Requirements
 
-1. Elden ring >= v1.12 
-2. [C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+1. Elden Ring files >= v1.12 (small vesion mismatch seems to work fine, ive tested 1.12.0 with 1.12.3 with no issues)
+2. DLC files (all users must have if you wanna play DLC)
+3. [C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe)
 
 ## Building
 
